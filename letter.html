@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Cinzel+Decorative:wght@400;700&family=Tiro+Devanagari+Hindi:ital@0;1&family=Noto+Sans+Devanagari:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 3rem 1.2rem; }
+
+  .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 5; display: flex; justify-content: space-between; padding: 1.4rem 1.6rem; }
+  .topbar a { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; opacity: 0.8; }
+
+  .seal-overlay { position: fixed; inset: 0; z-index: 20; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem; text-align: center; padding: 2rem; }
+  .seal-overlay.hide { display: none; }
+  .big-seal { width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--wine-bright), var(--wine) 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 26px rgba(0,0,0,0.5), inset 0 0 0 3px rgba(201,162,76,0.55); cursor: pointer; transition: transform 0.4s var(--ease); }
+  .big-seal:hover { transform: scale(1.05); }
+  .big-seal span { font-family: "Cinzel Decorative", var(--font-display); font-size: 2.4rem; color: var(--gold-light); }
+  .seal-overlay h2 { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: clamp(1.5rem, 4.6vw, 2.2rem); margin: 0; }
+
+  .scroll-wrap { width: min(92vw, 640px); perspective: 1600px; }
+  .scroll {
+    position: relative;
+    background: radial-gradient(120% 100% at 50% 0%, #fbf2df 0%, #f2e2c0 55%, #e9d3a6 100%);
+    border-radius: 4px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,162,76,0.25);
+    padding: clamp(2rem, 6vw, 4rem) clamp(1.6rem, 6vw, 3.6rem) 3rem;
+    color: #3a2418;
+    transform-origin: top center;
+    transform: scaleY(0.02);
+    opacity: 0;
+    transition: transform 1.3s var(--ease), opacity 0.6s ease;
+    max-height: 78vh;
+    overflow-y: auto;
+  }
+  .scroll.unrolled { transform: scaleY(1); opacity: 1; }
+  .scroll::before, .scroll::after { content: ""; position: absolute; left: -6px; right: -6px; height: 22px; background: linear-gradient(90deg, #8a5a2f, #b98a4d, #8a5a2f); border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.4); }
+  .scroll::before { top: -11px; } .scroll::after { bottom: -11px; }
+
+  .ornament { text-align: center; font-family: var(--font-display); font-size: 1.4rem; color: var(--wine); letter-spacing: 0.4em; margin-bottom: 1.6rem; opacity: 0; }
+  .scroll.unrolled .ornament { opacity: 1; transition: opacity 1s ease 0.8s; }
+
+  .greeting { font-family: var(--font-devanagari), var(--font-display); font-style: italic; font-weight: 600; font-size: clamp(1.4rem, 3.8vw, 1.9rem); margin-bottom: 1.6rem; color: var(--wine); }
+
+  .letter-body p.para {
+    font-family: var(--font-devanagari), var(--font-display);
+    font-size: clamp(1.02rem, 2.5vw, 1.18rem);
+    line-height: 1.95;
+    margin: 0 0 1.3rem;
+  }
+  .letter-body p.quote {
+    font-family: var(--font-devanagari), var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    text-align: center;
+    color: var(--wine);
+    font-size: clamp(1.05rem, 2.7vw, 1.28rem);
+    line-height: 1.9;
+    margin: 1.8rem 0;
+    padding: 0.2rem 0.5rem;
+    border-top: 1px solid rgba(124,47,65,0.25);
+    border-bottom: 1px solid rgba(124,47,65,0.25);
+  }
+
+  .signoff { margin-top: 1.8rem; font-family: var(--font-devanagari), var(--font-display); font-style: italic; font-size: 1.2rem; color: var(--wine); text-align: right; white-space: pre-line; }
+
+  .letter-controls { margin-top: 2.2rem; display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+  .letter-controls .mini-btn { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(124,47,65,0.08); border: 1px solid rgba(124,47,65,0.35); color: var(--wine); padding: 0.65em 1.3em; border-radius: 999px; cursor: pointer; }
+  .letter-controls .mini-btn:hover { background: rgba(124,47,65,0.15); }
+  .letter-controls .mini-btn:disabled { opacity: 0.45; cursor: default; }
+
+  .voice-note { text-align: center; margin-top: 0.9rem; font-size: 0.66rem; color: rgba(58,36,24,0.55); letter-spacing: 0.02em; }
+
+  .typing-cursor { display: inline-block; width: 2px; height: 1em; background: var(--wine); margin-left: 2px; vertical-align: -0.15em; animation: blink 0.9s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="topbar"><a href="movie.html">&larr; back to the movie</a></div>
+
+<div class="seal-overlay" id="sealOverlay">
+  <div class="eyebrow">a letter, sealed</div>
+  <div class="big-seal" id="bigSeal" role="button" tabindex="0" aria-label="Break the seal to open the letter">
+    <span>&#10022;</span>
+  </div>
+  <h2>break the seal</h2>
+</div>
+
+<div class="scroll-wrap">
+  <div class="scroll" id="scroll">
+    <div class="ornament">&#10022; &#10022; &#10022;</div>
+    <div class="greeting" id="greeting"></div>
+    <div class="letter-body" id="letterBody"></div>
+    <div class="signoff" id="signoff"></div>
+
+    <div class="letter-controls">
+      <button class="mini-btn" id="voiceBtn">&#9835; Play Guru's Voice</button>
+      <button class="mini-btn" id="replayBtn">&#8635; Replay</button>
+    </div>
+    <div class="voice-note" id="voiceNote">the letter types itself out as it's read</div>
+  </div>
+</div>
+
+<audio id="voiceAudio" preload="metadata"></audio>
+
+<script src="letter-data.js"></script>
+<script src="letter.js"></script>
+</body>
+</html>
