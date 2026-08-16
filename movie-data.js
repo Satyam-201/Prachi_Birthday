@@ -16,8 +16,8 @@
 const PHOTO_CHAPTERS = [
   { id: 1,  ready: true,  image: "images/ph1.jpg",  audio: "audio/song1.mp3",  label: "Memory 01",
     caption: "It wasn't loud. It wasn't dramatic. But somehow, in that one glance, you became the most beautiful distraction of my entire day." },
-  { id: 2,  ready: false, image: "",                 audio: "",                 label: "Memory 02", caption: "" },
-  { id: 3,  ready: false, image: "",                 audio: "",                 label: "Memory 03", caption: "" },
+  { id: 2,  ready: true, image: "images/ph2.jpg",                 audio: "audio/song2.mp3",                 label: "Memory 02", caption: "Somewhere between fear and hope, I chose you—and I’ve never looked back." },
+  { id: 3,  ready: true, image: "images/ph3.jpg",                 audio: "audio/song3.mp3",                 label: "Memory 03", caption: "Those late-night visits to your profile quietly became the beginning of my favourite story." },
   { id: 4,  ready: true,  image: "images/ph4.jpg",  audio: "audio/song4.mp3",  label: "Memory 04",
     caption: "That was the day my favourite chapter began." },
   { id: 5,  ready: true,  image: "images/ph5.jpg",  audio: "audio/song5.mp3",  label: "Memory 05",
@@ -33,7 +33,11 @@ const PHOTO_CHAPTERS = [
   { id: 10, ready: true,  image: "images/ph10.jpg", audio: "audio/song10.mp3", label: "Memory 10",
     caption: "Every time I see you, my heart whispers, \u201cthis is the one.\u201d" },
   { id: 11, ready: true,  image: "images/ph11.jpg", audio: "audio/song11.mp3", label: "Memory 11",
-    caption: "This is not just a dream anymore. This is our goal." }
+    caption: "This is not just a dream anymore. This is our goal." },
+   { id: 12, ready: true,  image: "images/ph12.jpg", audio: "audio/song12.mp3", label: "Memory 12",
+    caption: "Different moments, one journey, two hearts—and one beautiful future we’re building together." },
+{ id: 13, ready: true,  image: "images/ph13.jpg", audio: "audio/song13.mp3", label: "Memory 13",
+    caption: "“If I could live this life a thousand times, I’d still choose you—in every one of them.” ❤️" }
 ];
 
 /* Placeholder screen time (seconds) for any chapter that isn't ready yet */
