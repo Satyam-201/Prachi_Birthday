@@ -19,10 +19,22 @@
   let voiceAvailable = false;
 
   function openLetter() {
-    sealOverlay.classList.add('hide');
-    scroll.classList.add('unrolled');
-    setTimeout(() => typeLetter(), 900);
-  }
+  if (letterOpened) return;
+  letterOpened = true;
+
+  sealOverlay.classList.add('hide');
+  scroll.classList.add('unrolled');
+
+  setTimeout(() => typeLetter(), 900);
+
+  // Automatically start voice
+  playVoice();
+}
+  // function openLetter() {
+  //   sealOverlay.classList.add('hide');
+  //   scroll.classList.add('unrolled');
+  //   setTimeout(() => typeLetter(), 900);
+  // }
 
   bigSeal.addEventListener('click', openLetter);
   bigSeal.addEventListener('keydown', (e) => {
